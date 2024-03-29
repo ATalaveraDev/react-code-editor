@@ -29,7 +29,7 @@ const Actions = () => {
 
     const result = await Promise.all(files);
 
-    dispatch(Action.openFiles(result));
+    dispatch(Action.uploadFiles(result));
   };
 
   return <>

@@ -15,11 +15,11 @@ export class Tree {
   
   constructor() { }
   
-  add(newNode: TreeNode, parent: string): void {
+  add(newNode: TreeNode, parent: string | null): void {
     if (!this.root) {
       this.root = newNode;
     } else {
-      const parentNode = this.findById(parent);
+      const parentNode = parent ? this.findById(parent) : null;
       newNode.parent = parentNode;
       parentNode!.children.push(newNode);
       // parentNode.children.sort((a: TreeNode, b: TreeNode) => a.data.name.localeCompare(b.data.name));
@@ -61,5 +61,24 @@ export class Tree {
     depthTraverser(root as TreeNode);
 
     return target;
+  }
+
+  clone() {
+    const newTree = new Tree();
+    newTree.add(new TreeNode({...this.root!.data}), null);
+
+    const cloner = (node: TreeNode) => {
+      for(let i = 0; i < node.children.length; i++) {
+        newTree.add(new TreeNode({...node.children[i].data}), node.data.id);
+
+        if (node.children[i].children.length) {
+          cloner(node.children[i]);
+        }
+      }
+    };
+
+    cloner(this.root!);
+
+    return newTree;
   }
 }

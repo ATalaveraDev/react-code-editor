@@ -1,14 +1,16 @@
 import { Collapse, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { useAppStateContext } from '../../state/context';
+import { useAppDispatchContext, useAppStateContext } from '../../state/context';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
 import { TreeNode } from '../../helpers/tree';
+import { Action } from '../../models/actions';
 
 const FilesTree = () => {
   const state = useAppStateContext();
-  console.log(state)
+  const dispatch = useAppDispatchContext();
 
   const clickHandler = (e: any) => {
     console.log('node', e)
+    dispatch(Action.toggleFolder(e.data.id));
   };
 
   const render = (node: TreeNode) => {
