@@ -1,12 +1,10 @@
 export class TreeNode {
-  data: { value: any };
+  data: any;
   parent: TreeNode | null;
   children: TreeNode[];
 
-  constructor(value: any) {
-    this.data = {
-      value: value
-    };
+  constructor(data: any) {
+    this.data = {...data};
     this.parent = null;
     this.children = [];
   }
@@ -17,36 +15,36 @@ export class Tree {
   
   constructor() { }
   
-  add(newNode: TreeNode, parent: TreeNode | null): void {
+  add(newNode: TreeNode, parent: string): void {
     if (!this.root) {
       this.root = newNode;
     } else {
-      const parentNode = this.find(parent);
+      const parentNode = this.findById(parent);
       newNode.parent = parentNode;
       parentNode!.children.push(newNode);
       // parentNode.children.sort((a: TreeNode, b: TreeNode) => a.data.name.localeCompare(b.data.name));
     }
   }
 
-  find(node: TreeNode | null): TreeNode | null {
+  findById(nodeId: string): TreeNode | null {
     if (!this.root) {
       return null;
     }
 
-    if (this.root.data.value === node?.data.value) {
+    if (this.root.data.id === nodeId) {
       return this.root;
     } else {
-      return this.traverse(node as TreeNode, this.root);
+      return this.traverse(nodeId, this.root);
     }
   }
 
-  traverse(node: TreeNode, root = this.root): TreeNode | null {
+  traverse(nodeId: string, root = this.root): TreeNode | null {
     let found = false;
     let target = null;
 
     const depthTraverser = (currentNode: TreeNode) => {
       for (let i = 0; i < currentNode.children.length; i++) {
-        if (currentNode.children[i].data.value === node.data.value) {
+        if (currentNode.children[i].data.id === nodeId) {
           found = true;
           target = currentNode.children[i];
           break;
