@@ -15,14 +15,14 @@ export class Tree {
   
   constructor() { }
   
-  add(newNode: TreeNode, parent: string | null): void {
+  add(newNode: TreeNode, parent: string | null) {
     if (!this.root) {
       this.root = newNode;
     } else {
       const parentNode = parent ? this.findById(parent) : null;
       newNode.parent = parentNode;
       parentNode!.children.push(newNode);
-      // parentNode.children.sort((a: TreeNode, b: TreeNode) => a.data.name.localeCompare(b.data.name));
+      parentNode!.children.sort((a: TreeNode, b: TreeNode) => a.data.name.localeCompare(b.data.name));
     }
   }
 
@@ -80,5 +80,20 @@ export class Tree {
     cloner(this.root!);
 
     return newTree;
+  }
+
+  removeNode(nodeId: string) {
+    if (this.root!.data.id === nodeId) {
+      this.root = null;
+    } else {
+      const parentNode = this.findById(nodeId)!.parent as TreeNode;
+      const newChildren = [];
+      for(let i = 0; i < parentNode.children.length; i++) {
+        if (parentNode.children[i].data.id !== nodeId) {
+          newChildren.push(parentNode.children[i]);
+        }
+      }
+      parentNode.children = newChildren;
+    }
   }
 }

@@ -1,0 +1,8 @@
+#root {
+  display: grid;
+  grid-template-columns: 215px auto;
+}
+
+.sidebar {
+  width: calc(215px - 15px);
+}
