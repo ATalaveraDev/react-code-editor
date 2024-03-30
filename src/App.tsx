@@ -4,6 +4,7 @@ import Actions from './components/Actions/Actions'
 import FilesTree from './components/FilesTree/FilesTree'
 import { AppContextProvider } from './state/context'
 import Tabs from './components/Tabs/Tabs'
+import ContentEditor from './components/ContentEditor/ContentEditor'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       </Box>
       <Box className="content">
         <Tabs />
+        <ContentEditor />
       </Box>
     </AppContextProvider>
   )

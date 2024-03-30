@@ -1,3 +1,4 @@
+import { TreeNode } from '../helpers/tree';
 import { AppAction, Tab } from './main';
 
 export enum ActionTypes {
@@ -17,7 +18,7 @@ export class Action {
   static deleteTreeNode = (nodeId: string): AppAction => ({ type: ActionTypes.RemoveNode, payload: nodeId });
   static moveNode = (nodeId: string, newParentId: string): AppAction => ({ type: ActionTypes.MoveNode, payload: { nodeId, newParentId }});
   static editNode = (nodeId: string, name: string): AppAction => ({ type: ActionTypes.EditNode, payload: { nodeId, name }});
-  static openFile = (tab: Tab): AppAction => ({ type: ActionTypes.OpenFile, payload: tab });
+  static openFile = (id: string, text: string, content: any): AppAction => ({ type: ActionTypes.OpenFile, payload: {id, text, content} });
   static closeFile = (nodeId: string): AppAction => ({ type: ActionTypes.CloseFile, payload: nodeId });
   static activateTab = (tabId: string): AppAction => ({ type: ActionTypes.ActivateTab, payload: tabId });
 }

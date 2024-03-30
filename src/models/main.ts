@@ -8,6 +8,7 @@ export type AppAction = {
 export type AppState = {
   filesTree: Tree | null;
   tabs: Tab[];
+  content: any;
 };
 
 export type Tab = {

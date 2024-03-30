@@ -4,7 +4,8 @@ import { AppAction, AppState } from '../models/main';
 
 const initialState: AppState = {
   filesTree: null,
-  tabs: []
+  tabs: [],
+  content: ''
 };
 
 export const AppStateContext = createContext<AppState | null>(null);

@@ -76,13 +76,15 @@ const appReducer = (state: AppState, action: AppAction) => {
       });
 
       if (!alreadyInList) {
-        newTabs = newTabs.concat(action.payload);
+        newTabs = newTabs.concat({id: action.payload.id, text: action.payload.text, active: true});
       }
 
       return {
         ...state,
+        content: action.payload.content,
         tabs: newTabs
       };
+
     case ActionTypes.CloseFile:
       newTabs = state.tabs.filter(tab => tab.id !== action.payload);
       if (newTabs.length && newTabs.findIndex(tab => tab.active) < 0) {
@@ -94,7 +96,7 @@ const appReducer = (state: AppState, action: AppAction) => {
         tabs: newTabs
       };
     case ActionTypes.ActivateTab:
-      newTabs = state.tabs.map(tab => {        
+      newTabs = state.tabs.map(tab => {
         return {
           ...tab,
           active: tab.id === action.payload

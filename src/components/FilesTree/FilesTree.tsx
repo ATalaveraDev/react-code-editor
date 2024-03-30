@@ -17,12 +17,23 @@ const FilesTree = () => {
   const state = useAppStateContext();
   const dispatch = useAppDispatchContext();
 
-  const clickHandler = (node: TreeNode) => {
+  const clickHandler = async (node: TreeNode) => {
     if (editItem !== node.data.id) {
       if (node.data.type === 'folder') {
         dispatch(Action.toggleFolder(node.data.id));
       } else {
-        dispatch(Action.openFile({id: node.data.id, active: true, text: node.data.name }));
+        const readFile = async () => {
+          const reader = new FileReader();
+          const newResult = await new Promise(resolve => {
+            reader.onload = () => resolve(reader.result);
+            reader.readAsText(node.data.contents);
+          });
+
+          return newResult;
+        }
+
+        const content = await readFile();
+        dispatch(Action.openFile(node.data.id, node.data.name, content));
       }
     }
   };

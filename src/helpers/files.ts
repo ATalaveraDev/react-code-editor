@@ -16,7 +16,7 @@ export const getTree = (files: any) => {
 
       if (index === segments.length - 1) {
 
-        newTree.add(new TreeNode({type: 'file', name: segment, contents: file.contents, id: nodeId}), parentId);
+        newTree.add(new TreeNode({type: 'file', name: segment, contents: file, id: nodeId}), parentId);
       } else {
         newTree.add(new TreeNode({type: 'folder', name: segment, id: nodeId, opened: false}), parentId);
       }
