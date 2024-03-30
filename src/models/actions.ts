@@ -16,9 +16,9 @@ export class Action {
   static uploadFiles = (files: any[]): AppAction => ({ type: ActionTypes.UploadFiles, payload: files });
   static toggleFolder = (folderId: string): AppAction => ({ type: ActionTypes.ToggleFolder, payload: folderId });
   static deleteTreeNode = (nodeId: string): AppAction => ({ type: ActionTypes.RemoveNode, payload: nodeId });
-  static moveNode = (nodeId: string, newParentId: string): AppAction => ({ type: ActionTypes.MoveNode, payload: { nodeId, newParentId }});
-  static editNode = (nodeId: string, name: string): AppAction => ({ type: ActionTypes.EditNode, payload: { nodeId, name }});
+  static moveNode = (nodeId: string, newParentId: string): AppAction => ({ type: ActionTypes.MoveNode, payload: {nodeId, newParentId}});
+  static editNode = (nodeId: string, name: string): AppAction => ({ type: ActionTypes.EditNode, payload: {nodeId, name}});
   static openFile = (id: string, text: string, content: any): AppAction => ({ type: ActionTypes.OpenFile, payload: {id, text, content} });
   static closeFile = (nodeId: string): AppAction => ({ type: ActionTypes.CloseFile, payload: nodeId });
-  static activateTab = (tabId: string): AppAction => ({ type: ActionTypes.ActivateTab, payload: tabId });
+  static activateTab = (id: string, content: any): AppAction => ({ type: ActionTypes.ActivateTab, payload: {id, content} });
 }

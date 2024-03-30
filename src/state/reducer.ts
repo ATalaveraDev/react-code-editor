@@ -84,7 +84,6 @@ const appReducer = (state: AppState, action: AppAction) => {
         content: action.payload.content,
         tabs: newTabs
       };
-
     case ActionTypes.CloseFile:
       newTabs = state.tabs.filter(tab => tab.id !== action.payload);
       if (newTabs.length && newTabs.findIndex(tab => tab.active) < 0) {
@@ -99,12 +98,13 @@ const appReducer = (state: AppState, action: AppAction) => {
       newTabs = state.tabs.map(tab => {
         return {
           ...tab,
-          active: tab.id === action.payload
+          active: tab.id === action.payload.id
         };
       });
       
       return {
         ...state,
+        content: action.payload.content,
         tabs: newTabs
       };
   }
