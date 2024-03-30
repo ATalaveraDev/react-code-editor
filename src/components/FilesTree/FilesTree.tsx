@@ -1,6 +1,6 @@
-import { memo, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
-import { Delete } from '@mui/icons-material';
+import { Check, Close, Delete, Edit } from '@mui/icons-material';
 import { Collapse, IconButton, List, ListItem } from '@mui/material';
 
 import TreeItem from '../TreeItem/TreeItem';
@@ -11,15 +11,39 @@ import { useAppDispatchContext, useAppStateContext } from '../../state/context';
 const FilesTree = () => {
   console.log('FILES TREE RENDERED');
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [editItem, setEditItem] = useState('');
+  const nameInput = useRef<HTMLInputElement>(null);
 
   const state = useAppStateContext();
   const dispatch = useAppDispatchContext();
 
-  const clickHandler = (node: TreeNode) => dispatch(Action.toggleFolder(node.data.id));
+  const clickHandler = (node: TreeNode) => {
+    if (editItem !== node.data.id) {
+      dispatch(Action.toggleFolder(node.data.id));
+    }
+  };
 
   const deleteHandler = (event: any, nodeId: string) => {
     event.stopPropagation();
     dispatch(Action.deleteTreeNode(nodeId));
+  };
+
+  const editHandler = (event: any, nodeId: string) => {
+    event.stopPropagation();
+    setEditItem(nodeId);
+  };
+
+  const confirmEditHandler = (event: React.FormEvent, nodeId: string) => {
+    event.stopPropagation();
+    dispatch(Action.editNode(nodeId, nameInput.current!.value));
+    setEditItem('');
+    setHoveredItem(null);
+  };
+
+  const cancelEditHandler = (event: React.FormEvent) => {
+    event.stopPropagation();
+    setEditItem('');
+    setHoveredItem(null);
   };
 
   const dragStartHandler = (event: React.DragEvent, node: TreeNode) => {
@@ -39,10 +63,15 @@ const FilesTree = () => {
     return <>
       <ListItem 
         sx={{ pl: 1 }}
-        secondaryAction={hoveredItem === node.data.id && 
-          <IconButton edge="end" aria-label="delete" onClick={(event) => deleteHandler(event, node.data.id)}>
-            <Delete />
-          </IconButton>
+        secondaryAction={hoveredItem === node.data.id && editItem !== node.data.id &&
+          <>
+            <IconButton edge="end" aria-label="edit" onClick={(event) => editHandler(event, node.data.id)}>
+              <Edit />
+            </IconButton>
+            <IconButton edge="end" aria-label="delete" onClick={(event) => deleteHandler(event, node.data.id)}>
+              <Delete />
+            </IconButton>
+          </>
         }
         onClick={() => clickHandler(node)}
         onMouseEnter={() => setHoveredItem(node.data.id)}
@@ -52,7 +81,18 @@ const FilesTree = () => {
         onDrop={(event) => dropHandler(event, node)}
         draggable
       >
-        <TreeItem opened={node.data.opened} name={node.data.name} type={node.data.type} />
+        {editItem !== node.data.id ? 
+          <TreeItem opened={node.data.opened} name={node.data.name} type={node.data.type} /> : 
+          <>
+            <input type="text" ref={nameInput} defaultValue={node.data.name} />
+            <IconButton  edge="end" aria-label="edit" onClick={(event) => confirmEditHandler(event, node.data.id)}>
+              <Check />
+            </IconButton>
+            <IconButton  edge="end" aria-label="edit" onClick={(event) => cancelEditHandler(event)}>
+              <Close />
+            </IconButton>
+          </>
+        }
       </ListItem>
       {Array.isArray(node.children) ? node.children.map(element => {
         return (<Collapse component="li" in={node.data.opened} key={element.data.id} style={{ paddingLeft: '16px' }}>

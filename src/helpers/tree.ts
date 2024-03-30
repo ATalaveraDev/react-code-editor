@@ -104,4 +104,9 @@ export class Tree {
     node!.parent = parent;
     parent?.children.push(node!);
   }
+
+  editNode(nodeId: string, newName: string) {
+    const node = this.findById(nodeId);
+    node!.data.name = newName;
+  }
 }
