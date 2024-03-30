@@ -1,11 +1,12 @@
-import { Delete, KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
-import { Collapse, IconButton, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { memo, useState } from 'react';
 
+import { Delete } from '@mui/icons-material';
+import { Collapse, IconButton, List, ListItem } from '@mui/material';
+
+import TreeItem from '../TreeItem/TreeItem';
 import { TreeNode } from '../../helpers/tree';
 import { Action } from '../../models/actions';
 import { useAppDispatchContext, useAppStateContext } from '../../state/context';
-import TreeItem from '../TreeItem/TreeItem';
-import { memo, useState } from 'react';
 
 const FilesTree = () => {
   console.log('FILES TREE RENDERED');
@@ -21,18 +22,34 @@ const FilesTree = () => {
     dispatch(Action.deleteTreeNode(nodeId));
   };
 
+  const dragStartHandler = (event: React.DragEvent, node: TreeNode) => {
+    event.dataTransfer.setData('text/plain', node.data.id);
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
+  const dragOverHandler = (event: React.DragEvent) => event.preventDefault();
+
+  const dropHandler= (event: React.DragEvent, node: TreeNode) => {
+    const parentId = node.data.type === 'folder' ? node.data.id : node.parent!.data.id;
+
+    dispatch(Action.moveNode(event.dataTransfer.getData('text/plain'), parentId));
+  };
+
   const render = (node: TreeNode) => {
     return <>
       <ListItem 
         sx={{ pl: 1 }}
-        onClick={() => clickHandler(node)}
-        onMouseEnter={() => setHoveredItem(node.data.id)}
-        onMouseLeave={() => setHoveredItem(null)}
-        secondaryAction={
-          hoveredItem === node.data.id && <IconButton edge="end" aria-label="delete" onClick={(event) => deleteHandler(event, node.data.id)}>
+        secondaryAction={hoveredItem === node.data.id && 
+          <IconButton edge="end" aria-label="delete" onClick={(event) => deleteHandler(event, node.data.id)}>
             <Delete />
           </IconButton>
         }
+        onClick={() => clickHandler(node)}
+        onMouseEnter={() => setHoveredItem(node.data.id)}
+        onMouseLeave={() => setHoveredItem(null)}
+        onDragStart={(event) => dragStartHandler(event, node)}
+        onDragOver={(event) => dragOverHandler(event)}
+        onDrop={(event) => dropHandler(event, node)}
         draggable
       >
         <TreeItem opened={node.data.opened} name={node.data.name} type={node.data.type} />

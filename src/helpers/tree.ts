@@ -96,4 +96,12 @@ export class Tree {
       parentNode.children = newChildren;
     }
   }
+
+  moveNode(nodeId: string, newParentId: string) {
+    const node = this.findById(nodeId);
+    this.removeNode(nodeId);
+    const parent = this.findById(newParentId);
+    node!.parent = parent;
+    parent?.children.push(node!);
+  }
 }

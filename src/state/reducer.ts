@@ -29,6 +29,13 @@ const appReducer = (state: AppState, action: AppAction) => {
         ...state,
         filesTree: newTree
       };
+    case ActionTypes.MoveNode:
+      newTree = state.filesTree?.clone() as Tree;
+      newTree.moveNode(action.payload.nodeId, action.payload.newParentId);
+      return {
+        ...state,
+        filesTree: newTree
+      };
   }
 
   return state;
