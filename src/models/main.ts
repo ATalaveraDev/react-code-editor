@@ -7,4 +7,11 @@ export type AppAction = {
 
 export type AppState = {
   filesTree: Tree | null;
+  tabs: Tab[];
+};
+
+export type Tab = {
+  id: string;
+  text: string;
+  active: boolean;
 };

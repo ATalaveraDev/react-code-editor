@@ -1,11 +1,14 @@
-import { AppAction } from './main';
+import { AppAction, Tab } from './main';
 
 export enum ActionTypes {
   UploadFiles = 'UPLOAD_FILES',
   ToggleFolder = 'TOGGLE_FOLDER',
   RemoveNode = 'REMOVE_NODE',
   MoveNode = 'MOVE_NODE',
-  EditNode = 'EDIT_NODE'
+  EditNode = 'EDIT_NODE',
+  OpenFile = 'OPEN_FILE',
+  CloseFile = 'CLOSE_FILE',
+  ActivateTab = 'ACTIVATE_TAB'
 }
 
 export class Action {
@@ -14,4 +17,7 @@ export class Action {
   static deleteTreeNode = (nodeId: string): AppAction => ({ type: ActionTypes.RemoveNode, payload: nodeId });
   static moveNode = (nodeId: string, newParentId: string): AppAction => ({ type: ActionTypes.MoveNode, payload: { nodeId, newParentId }});
   static editNode = (nodeId: string, name: string): AppAction => ({ type: ActionTypes.EditNode, payload: { nodeId, name }});
+  static openFile = (tab: Tab): AppAction => ({ type: ActionTypes.OpenFile, payload: tab });
+  static closeFile = (nodeId: string): AppAction => ({ type: ActionTypes.CloseFile, payload: nodeId });
+  static activateTab = (tabId: string): AppAction => ({ type: ActionTypes.ActivateTab, payload: tabId });
 }

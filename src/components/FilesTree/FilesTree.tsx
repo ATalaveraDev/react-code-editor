@@ -19,7 +19,11 @@ const FilesTree = () => {
 
   const clickHandler = (node: TreeNode) => {
     if (editItem !== node.data.id) {
-      dispatch(Action.toggleFolder(node.data.id));
+      if (node.data.type === 'folder') {
+        dispatch(Action.toggleFolder(node.data.id));
+      } else {
+        dispatch(Action.openFile({id: node.data.id, active: true, text: node.data.name }));
+      }
     }
   };
 

@@ -1,10 +1,11 @@
-import { getTree } from '../helpers/files';
+import { getTree, removeChildrenTabs } from '../helpers/files';
 import { Tree } from '../helpers/tree';
 import { ActionTypes } from '../models/actions';
-import { AppAction, AppState } from '../models/main';
+import { AppAction, AppState, Tab } from '../models/main';
 
 const appReducer = (state: AppState, action: AppAction) => {
   let newTree: Tree;
+  let newTabs: Tab[];
 
   switch (action.type) {
     case ActionTypes.UploadFiles:
@@ -22,11 +23,26 @@ const appReducer = (state: AppState, action: AppAction) => {
         filesTree: newTree
       };
     case ActionTypes.RemoveNode:
+      newTabs = [];
+      const nodeToBeRemoved = state.filesTree?.findById(action.payload);
       newTree = state.filesTree?.clone() as Tree;
       newTree.removeNode(action.payload);
 
+      if (nodeToBeRemoved!.data.type === 'file') {
+        newTabs = state.tabs.filter(tab => {
+          return tab.id !== action.payload.data.id;
+        });
+      } else {
+        newTabs = removeChildrenTabs(nodeToBeRemoved!, state.tabs);
+      }
+
+      if (newTabs.length && newTabs.findIndex(tab => tab.active) < 0) {
+        newTabs[0].active = true;
+      }
+
       return {
         ...state,
+        tabs: newTabs,
         filesTree: newTree
       };
     case ActionTypes.MoveNode:
@@ -44,6 +60,50 @@ const appReducer = (state: AppState, action: AppAction) => {
       return {
         ...state,
         filesTree: newTree
+      };
+    case ActionTypes.OpenFile:
+      let alreadyInList = false;
+
+      newTabs = state.tabs.map(tab => {
+        if (tab.id === action.payload.id) {
+          alreadyInList = true;
+        }
+        
+        return {
+          ...tab,
+          active: tab.id === action.payload.id
+        };
+      });
+
+      if (!alreadyInList) {
+        newTabs = newTabs.concat(action.payload);
+      }
+
+      return {
+        ...state,
+        tabs: newTabs
+      };
+    case ActionTypes.CloseFile:
+      newTabs = state.tabs.filter(tab => tab.id !== action.payload);
+      if (newTabs.length && newTabs.findIndex(tab => tab.active) < 0) {
+        newTabs[0].active = true;
+      }
+
+      return {
+        ...state,
+        tabs: newTabs
+      };
+    case ActionTypes.ActivateTab:
+      newTabs = state.tabs.map(tab => {        
+        return {
+          ...tab,
+          active: tab.id === action.payload
+        };
+      });
+      
+      return {
+        ...state,
+        tabs: newTabs
       };
   }
 

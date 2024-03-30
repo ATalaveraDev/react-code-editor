@@ -19,13 +19,15 @@ const Actions = () => {
   };
 
   const uploadFilesHandler = async (event: React.FormEvent<HTMLInputElement>) => {
-    const files = Array.from((event.target as HTMLInputElement).files || []).map((element: any) => {
-      const reader = new FileReader();
-      return new Promise(resolve => {
-        reader.onload = () => resolve({path: element.webkitRelativePath, contents: reader.result });
-        reader.readAsText(element);
-      });
-    });
+    const files = Array.from((event.target as HTMLInputElement).files || [])
+    
+    // .map((element: any) => {
+    //   const reader = new FileReader();
+    //   return new Promise(resolve => {
+    //     reader.onload = () => resolve({path: element.webkitRelativePath, contents: reader.result });
+    //     reader.readAsText(element);
+    //   });
+    // });
 
     const result = await Promise.all(files);
 

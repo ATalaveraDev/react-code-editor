@@ -3,7 +3,8 @@ import appReducer from './reducer';
 import { AppAction, AppState } from '../models/main';
 
 const initialState: AppState = {
-  filesTree: null
+  filesTree: null,
+  tabs: []
 };
 
 export const AppStateContext = createContext<AppState | null>(null);

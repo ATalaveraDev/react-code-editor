@@ -3,6 +3,7 @@ import './App.css'
 import Actions from './components/Actions/Actions'
 import FilesTree from './components/FilesTree/FilesTree'
 import { AppContextProvider } from './state/context'
+import Tabs from './components/Tabs/Tabs'
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
         <Actions />
         <FilesTree />
       </Box>
-      <Box></Box>
+      <Box className="content">
+        <Tabs />
+      </Box>
     </AppContextProvider>
   )
 }
