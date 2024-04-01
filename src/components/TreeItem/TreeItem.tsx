@@ -6,7 +6,7 @@ const TreeItem = ({type, opened, name}: {type: string, opened: boolean, name: st
   console.log('TREE ITEM RENDERED');
   return <>
     <ListItemIcon sx={{minWidth: '30px'}}>
-      {type === 'folder' ? (opened ? <KeyboardArrowDown /> : <KeyboardArrowRight/>) : null}
+      {type === 'folder' ? (opened ? <KeyboardArrowDown color="primary"/> : <KeyboardArrowRight color="primary"/>) : null}
     </ListItemIcon>
     <ListItemText>
       <Typography whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{name}</Typography>

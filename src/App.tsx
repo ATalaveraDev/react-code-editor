@@ -1,23 +1,37 @@
-import { Box } from '@mui/material'
+import { Box, ThemeProvider, createTheme } from '@mui/material'
 import './App.css'
 import Actions from './components/Actions/Actions'
 import FilesTree from './components/FilesTree/FilesTree'
 import { AppContextProvider } from './state/context'
-import Tabs from './components/Tabs/Tabs'
-import ContentEditor from './components/ContentEditor/ContentEditor'
+import Main from './components/Main/Main'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#f8f8f2'
+    },
+    warning: {
+      main: '#ff5555'
+    }
+  },
+  typography: {
+    fontSize: 12
+  }
+});
 
 function App() {
   return (
-    <AppContextProvider>
-      <Box className="sidebar">
-        <Actions />
-        <FilesTree />
-      </Box>
-      <Box className="content">
-        <Tabs />
-        <ContentEditor />
-      </Box>
-    </AppContextProvider>
+    <ThemeProvider theme={theme}>
+      <AppContextProvider>
+        <Box className="sidebar">
+          <Actions />
+          <FilesTree />
+        </Box>
+        <Box className="content">
+          <Main />
+        </Box>
+      </AppContextProvider>
+    </ThemeProvider>
   )
 }
 

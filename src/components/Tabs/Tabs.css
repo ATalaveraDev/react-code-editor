@@ -1,0 +1,18 @@
+.tabs-container {
+  background-color: var(--background);
+  color: var(--foreground);
+  padding: 0;
+}
+
+.tabs-container ul {
+  display: flex;
+}
+
+.tabs-container ul:hover {
+  overflow-x: scroll;
+}
+
+.empty {
+  flex: 1;
+  border-bottom: 1px solid var(--foreground);
+}

@@ -4,6 +4,8 @@ import { ListItem, ListItemText, Typography } from '@mui/material';
 import { Action } from '../../models/actions';
 import { useAppDispatchContext } from '../../state/context';
 
+import './Tab.css';
+
 const Tab = ({text, id, active}: {text: string, id: string, active: boolean}) => {
   const dispatch = useAppDispatchContext();
 
@@ -18,9 +20,9 @@ const Tab = ({text, id, active}: {text: string, id: string, active: boolean}) =>
 
   return (
     <ListItem 
-      secondaryAction={active ? <Close onClick={(event) => closeHandler(event, id)} /> : null}
+      className={`tab ${active ? 'active-tab' : ''}`}
+      secondaryAction={active ? <Close className="close-tab" onClick={(event) => closeHandler(event, id)} /> : null}
       onClick={() => activateTabHandler(id)}
-      sx={{maxWidth: 150, display: 'inline-block', borderBottom: active ? '1px solid red' : ''}}
     >
       <ListItemText>
         <Typography whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">{text}</Typography>

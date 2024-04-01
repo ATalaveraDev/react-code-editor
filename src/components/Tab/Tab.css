@@ -1,0 +1,15 @@
+.tab {
+  max-width: 150px;
+  border-right: 1px solid var(--foreground);
+  border-bottom: 1px solid var(--foreground);
+  cursor: pointer;
+}
+
+.active-tab {
+  background-color: var(--secondary);
+  border-bottom: 1px solid var(--secondary);
+}
+
+.close-tab:hover {
+  background-color: var(--background);
+}

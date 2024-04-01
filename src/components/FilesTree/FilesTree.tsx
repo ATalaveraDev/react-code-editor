@@ -8,6 +8,8 @@ import { TreeNode } from '../../helpers/tree';
 import { Action } from '../../models/actions';
 import { useAppDispatchContext, useAppStateContext } from '../../state/context';
 
+import './FilesTree.css';
+
 const FilesTree = () => {
   console.log('FILES TREE RENDERED');
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -16,6 +18,13 @@ const FilesTree = () => {
 
   const state = useAppStateContext();
   const dispatch = useAppDispatchContext();
+
+  let activeNode: string;
+  state.tabs.forEach(tab => {
+    if (tab.active) {
+      activeNode = tab.id;
+    }
+  });
 
   const clickHandler = async (node: TreeNode) => {
     if (editItem !== node.data.id) {
@@ -81,14 +90,15 @@ const FilesTree = () => {
 
   const render = (node: TreeNode) => {
     return <>
-      <ListItem 
+      <ListItem
+        className={`tree-node ${activeNode === node.data.id ? 'active' : ''}`}
         sx={{ pl: 1 }}
         secondaryAction={hoveredItem === node.data.id && editItem !== node.data.id &&
           <>
-            <IconButton edge="end" aria-label="edit" onClick={(event) => editHandler(event, node.data.id)}>
+            <IconButton edge="end" aria-label="edit" color="primary" onClick={(event) => editHandler(event, node.data.id)}>
               <Edit />
             </IconButton>
-            <IconButton edge="end" aria-label="delete" onClick={(event) => deleteHandler(event, node.data.id)}>
+            <IconButton edge="end" aria-label="delete" color="warning" onClick={(event) => deleteHandler(event, node.data.id)}>
               <Delete />
             </IconButton>
           </>
