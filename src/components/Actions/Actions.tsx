@@ -11,6 +11,7 @@ declare module 'react' {
 }
 
 const Actions = () => {
+  console.log('RENDER ACTIONS')
   const uploaderRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatchContext();
 

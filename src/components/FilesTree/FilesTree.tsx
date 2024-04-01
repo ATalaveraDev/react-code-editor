@@ -109,10 +109,8 @@ const FilesTree = () => {
           </>
         }
       </ListItem>
-      {Array.isArray(node.children) ? node.children.map(element => {
-        return (<Collapse component="li" in={node.data.opened} key={element.data.id} style={{ paddingLeft: '16px' }}>
-          <List disablePadding dense={true}>{render(element)}</List>
-        </Collapse>)
+      {Array.isArray(node.children) && node.data.opened ? node.children.map(element => {
+        return (<List key={element.data.id} disablePadding dense={true} style={{ paddingLeft: '16px' }}>{render(element)}</List>)
       }) : null}
     </>;
   };
