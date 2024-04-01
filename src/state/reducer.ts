@@ -6,6 +6,7 @@ import { AppAction, AppState, Tab } from '../models/main';
 const appReducer = (state: AppState, action: AppAction) => {
   let newTree: Tree;
   let newTabs: Tab[];
+  let newContent: string;
 
   switch (action.type) {
     case ActionTypes.UploadFiles:
@@ -84,28 +85,60 @@ const appReducer = (state: AppState, action: AppAction) => {
         content: action.payload.content,
         tabs: newTabs
       };
+    case ActionTypes.VirtualizeAndOpenFile:
+      newTabs = state.tabs.map(tab => {        
+        return {
+          ...tab,
+          active: tab.id === action.payload.id
+        };
+      });
+      newTabs = newTabs.concat({id: action.payload.id, text: action.payload.text, active: true});
+
+      newTree = state.filesTree!.clone();
+      newTree.findById(action.payload.id)!.data.virContent = action.payload.content;
+
+
+      return {
+        ...state,
+        filesTree: newTree,
+        content: action.payload.content,
+        tabs: newTabs
+      };
     case ActionTypes.CloseFile:
       newTabs = state.tabs.filter(tab => tab.id !== action.payload);
       if (newTabs.length && newTabs.findIndex(tab => tab.active) < 0) {
         newTabs[0].active = true;
       }
 
+      newContent = newTabs.length ? state.filesTree!.findById(newTabs[0].id)!.data.virContent : '';
+
       return {
         ...state,
+        content: newContent,
         tabs: newTabs
       };
     case ActionTypes.ActivateTab:
       newTabs = state.tabs.map(tab => {
         return {
           ...tab,
-          active: tab.id === action.payload.id
+          active: tab.id === action.payload
         };
       });
+
+      const content = state.filesTree?.findById(action.payload)?.data.virContent;
       
       return {
         ...state,
-        content: action.payload.content,
+        content,
         tabs: newTabs
+      };
+    case ActionTypes.ModifyFileContent:
+      newTree = state.filesTree!.clone();
+      newTree.findById(action.payload.id)!.data.virContent = action.payload.content;
+
+      return {
+        ...state,
+        filesTree: newTree
       };
   }
 

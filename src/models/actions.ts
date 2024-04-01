@@ -8,8 +8,10 @@ export enum ActionTypes {
   MoveNode = 'MOVE_NODE',
   EditNode = 'EDIT_NODE',
   OpenFile = 'OPEN_FILE',
+  VirtualizeAndOpenFile = 'VIRTUALIZE_OPEN_FILE',
   CloseFile = 'CLOSE_FILE',
-  ActivateTab = 'ACTIVATE_TAB'
+  ActivateTab = 'ACTIVATE_TAB',
+  ModifyFileContent = 'MODIFY_FILE_CONTENT'
 }
 
 export class Action {
@@ -19,6 +21,8 @@ export class Action {
   static moveNode = (nodeId: string, newParentId: string): AppAction => ({ type: ActionTypes.MoveNode, payload: {nodeId, newParentId}});
   static editNode = (nodeId: string, name: string): AppAction => ({ type: ActionTypes.EditNode, payload: {nodeId, name}});
   static openFile = (id: string, text: string, content: any): AppAction => ({ type: ActionTypes.OpenFile, payload: {id, text, content} });
+  static virtualizeOpenFile = (id: string, text: string, content: any): AppAction => ({ type: ActionTypes.VirtualizeAndOpenFile, payload: {id, text, content} });
   static closeFile = (nodeId: string): AppAction => ({ type: ActionTypes.CloseFile, payload: nodeId });
-  static activateTab = (id: string, content: any): AppAction => ({ type: ActionTypes.ActivateTab, payload: {id, content} });
+  static activateTab = (id: string): AppAction => ({ type: ActionTypes.ActivateTab, payload: id });
+  static modifyFileContent = (id: string, content: string): AppAction => ({ type: ActionTypes.ModifyFileContent, payload: {id, content} });
 }

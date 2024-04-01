@@ -1,7 +1,7 @@
 import { memo, useRef, useState } from 'react';
 
 import { Check, Close, Delete, Edit } from '@mui/icons-material';
-import { Collapse, IconButton, List, ListItem } from '@mui/material';
+import { IconButton, List, ListItem } from '@mui/material';
 
 import TreeItem from '../TreeItem/TreeItem';
 import { TreeNode } from '../../helpers/tree';
@@ -22,18 +22,23 @@ const FilesTree = () => {
       if (node.data.type === 'folder') {
         dispatch(Action.toggleFolder(node.data.id));
       } else {
-        const readFile = async () => {
-          const reader = new FileReader();
-          const newResult = await new Promise(resolve => {
-            reader.onload = () => resolve(reader.result);
-            reader.readAsText(node.data.contents);
-          });
+        if (!node.data.virContent) {
+          const readFile = async () => {
+            const reader = new FileReader();
+            const newResult = await new Promise(resolve => {
+              reader.onload = () => resolve(reader.result);
+              reader.readAsText(node.data.contents);
+            });
+  
+            return newResult;
+          }
+  
+          const content = await readFile();
 
-          return newResult;
+          dispatch(Action.virtualizeOpenFile(node.data.id, node.data.name, content));
+        } else {
+          dispatch(Action.openFile(node.data.id, node.data.name, node.data.virContent));
         }
-
-        const content = await readFile();
-        dispatch(Action.openFile(node.data.id, node.data.name, content));
       }
     }
   };

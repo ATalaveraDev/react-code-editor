@@ -1,11 +1,11 @@
 import { Close } from '@mui/icons-material';
 import { ListItem, ListItemText, Typography } from '@mui/material';
-import { useAppDispatchContext, useAppStateContext } from '../../state/context';
+
 import { Action } from '../../models/actions';
+import { useAppDispatchContext } from '../../state/context';
 
 const Tab = ({text, id, active}: {text: string, id: string, active: boolean}) => {
   const dispatch = useAppDispatchContext();
-  const state = useAppStateContext();
 
   const closeHandler = (event: React.FormEvent, nodeId: string) => {
     event.stopPropagation();
@@ -13,20 +13,7 @@ const Tab = ({text, id, active}: {text: string, id: string, active: boolean}) =>
   };
 
   const activateTabHandler = async (id: string) => {
-    const readFile = async () => {
-      const reader = new FileReader();
-      const newResult = await new Promise(resolve => {
-        const node = state.filesTree?.findById(id);
-        reader.onload = () => resolve(reader.result);
-        reader.readAsText(node!.data.contents);
-      });
-
-      return newResult;
-    }
-
-    const content = await readFile();
-
-    dispatch(Action.activateTab(id, content));
+    dispatch(Action.activateTab(id));
   };
 
   return (
