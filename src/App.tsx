@@ -1,9 +1,11 @@
-import { Box, ThemeProvider, createTheme } from '@mui/material'
-import './App.css'
-import Actions from './components/Actions/Actions'
-import FilesTree from './components/FilesTree/FilesTree'
-import { AppContextProvider } from './state/context'
-import Main from './components/Main/Main'
+import { Box, ThemeProvider, createTheme } from '@mui/material';
+
+import './App.css';
+
+import Main from './components/Main/Main';
+import Actions from './components/Actions/Actions';
+import { AppContextProvider } from './state/context';
+import FilesTree from './components/FilesTree/FilesTree';
 
 const theme = createTheme({
   palette: {
