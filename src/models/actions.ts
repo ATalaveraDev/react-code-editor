@@ -1,5 +1,4 @@
-import { TreeNode } from '../helpers/tree';
-import { AppAction, Tab } from './main';
+import { AppAction } from './main';
 
 export enum ActionTypes {
   UploadFiles = 'UPLOAD_FILES',

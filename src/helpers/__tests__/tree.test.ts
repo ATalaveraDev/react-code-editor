@@ -31,18 +31,18 @@ describe('Tree', () => {
     
     tree.add(node, null);
 
-    expect(tree.find(node)?.data.value).toBe('root');
+    expect(tree.findById(node.data.id)?.data.value).toBe('root');
   });
 
   describe('Adding nodes', () => {
     test('should add the node as a children of the parent param', () => {
       const child = new TreeNode('child');
-      const rootNode = new TreeNode('parent');
+      const rootNode = new TreeNode('parent').data.id;
       tree.root = rootNode;
 
       tree.add(child, rootNode);
 
-      expect(tree.root.children[0].data.value).toBe('child')
+      expect(tree.root!.children[0].data.value).toBe('child')
     });
 
     test('should add the node as the root if the tree is empty', () => {
