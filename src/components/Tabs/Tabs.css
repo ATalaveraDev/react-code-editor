@@ -8,8 +8,8 @@
   display: flex;
 }
 
-.tabs-container ul:hover {
-  overflow-x: scroll;
+.tabs-container:hover {
+  overflow-x: auto;
 }
 
 .empty {

@@ -3,6 +3,9 @@
   --active: #6272a4;
   --foreground: #f8f8f2;
   --secondary: #1E1E1E;
+
+  --medium: 15px;
+  --large: 32px;
 }
 
 body {
@@ -45,5 +48,19 @@ body {
   display: flex;
   overflow: auto;
   flex-direction: column;
+  color: var(--foreground);
   background-color: var(--secondary);
+}
+
+.mar-top-medium {
+  margin-top: var(--medium);
+}
+
+.mar-top-large {
+  margin-top: var(--large);
+}
+
+.pad-side-large {
+  padding-left: var(--large);
+  padding-right: var(--large);
 }

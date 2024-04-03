@@ -6,6 +6,7 @@ import Main from './components/Main/Main';
 import Actions from './components/Actions/Actions';
 import { AppContextProvider } from './state/context';
 import FilesTree from './components/FilesTree/FilesTree';
+import DisclaimerDialog from './components/DisclaimerDialog/DisclaimerDialog';
 
 const theme = createTheme({
   palette: {
@@ -25,6 +26,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppContextProvider>
+        <DisclaimerDialog />
         <Box className="sidebar">
           <Actions />
           <FilesTree />

@@ -1,5 +1,6 @@
 import { useAppStateContext } from '../../state/context';
 import ContentEditor from '../ContentEditor/ContentEditor';
+import FeaturesOverview from '../FeaturesOverview/FeaturesOverview';
 import Tabs from '../Tabs/Tabs';
 
 import './Main.css';
@@ -10,7 +11,7 @@ const Main = () => {
   return state.tabs.length ? <> 
       <Tabs />
       <ContentEditor />
-    </> : null;
+    </> : <FeaturesOverview />;
 };
 
 export default Main;
