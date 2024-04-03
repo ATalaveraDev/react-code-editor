@@ -1,5 +1,5 @@
 import { Check, Close } from '@mui/icons-material';
-import { Avatar, Box, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 
 import './FeaturesOverview.css';
 
