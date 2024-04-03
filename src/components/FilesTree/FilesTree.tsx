@@ -1,7 +1,7 @@
 import { memo, useRef, useState } from 'react';
 
 import { Check, Close, Delete, Edit } from '@mui/icons-material';
-import { IconButton, List, ListItem } from '@mui/material';
+import { IconButton, List, ListItem, Typography } from '@mui/material';
 
 import TreeItem from '../TreeItem/TreeItem';
 import { TreeNode } from '../../helpers/tree';
@@ -130,9 +130,9 @@ const FilesTree = () => {
     </>;
   };
 
-  return state.filesTree && <List dense={true}>
+  return state.filesTree ? <List dense={true}>
     {render(state.filesTree.root as TreeNode)}
-  </List>
+  </List> : <Typography textAlign={'center'} color={'var(--foreground)'} variant="subtitle1"><i>No files selected</i></Typography>
 };
 
 export default memo(FilesTree);
