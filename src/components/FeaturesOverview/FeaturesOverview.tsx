@@ -2,8 +2,11 @@ import { Check, Close } from '@mui/icons-material';
 import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 
 import './FeaturesOverview.css';
+import { memo } from 'react';
 
-const FeaturesOverview = () => {
+const FeaturesOverview = ({visible}: { visible: boolean}) => {
+  console.log('FEATURES OVERVIEW RENDERED');
+
   const features = [
     { title: 'Upload folders', description: 'You are able to upload folders with all its content including subfolders', done: true },
     { title: 'Edit files', description: 'The changes will remain during the session', done: true },
@@ -15,7 +18,7 @@ const FeaturesOverview = () => {
   ];
 
   return (
-    <>
+    visible && <>
       <Typography variant="h3" padding={4}>Web base IDE</Typography>
       <Box className="features-overview-container">
         <Box className="pad-side-large">
@@ -46,4 +49,4 @@ const FeaturesOverview = () => {
   )
 };
 
-export default FeaturesOverview;
+export default memo(FeaturesOverview);

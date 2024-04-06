@@ -7,11 +7,13 @@ import './Main.css';
 
 const Main = () => {
   const state = useAppStateContext();
+  const showFeatures = !state.tabs.length;
 
-  return state.tabs.length ? <> 
-      <Tabs />
-      <ContentEditor />
-    </> : <FeaturesOverview />;
+  return <> 
+      <Tabs data={state.tabs} />
+      <ContentEditor content={state.content} />
+      <FeaturesOverview visible={showFeatures} />
+    </>;
 };
 
 export default Main;

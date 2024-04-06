@@ -1,18 +1,17 @@
-import { Editor } from '@monaco-editor/react';
-import { useAppDispatchContext, useAppStateContext } from '../../state/context';
-import { Action } from '../../models/actions';
-import { Box } from '@mui/material';
+import { memo } from 'react';
 
-const ContentEditor = () => {
-  const state = useAppStateContext();
+import { Box } from '@mui/material';
+import { Editor } from '@monaco-editor/react';
+
+import { Action } from '../../models/actions';
+import { useAppDispatchContext } from '../../state/context';
+
+const ContentEditor = ({content}: {content: string}) => {
   const dispatch = useAppDispatchContext();
   console.log('RENDER EDITOR')
 
-  const content = state.content;
-
   const changeHandler = (newContent: string | undefined) => {
-    const id = state.tabs.filter(tab => tab.active)[0].id;
-    dispatch(Action.modifyFileContent(id, newContent as string));
+    dispatch(Action.modifyFileContent(newContent as string));
   };
 
   return content && <Box paddingTop={3}>
@@ -20,4 +19,4 @@ const ContentEditor = () => {
     </Box>;
 };
 
-export default ContentEditor;
+export default memo(ContentEditor);

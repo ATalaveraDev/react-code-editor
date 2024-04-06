@@ -1,18 +1,19 @@
-import { useAppStateContext } from '../../state/context';
 import Tab from '../Tab/Tab';
 import { Box, List, ListItem } from '@mui/material';
 
 import './Tabs.css';
+import { Tab as TTab } from '../../models/main';
+import { memo } from 'react';
 
-const Tabs = () => {
-  const state = useAppStateContext();
+const Tabs = ({data}: {data: TTab[]}) => {
+  console.log('TABS RENDERED');
 
-  return <Box className="tabs-container">
+  return data.length > 0 && <Box className="tabs-container">
     <List disablePadding>
-      {state.tabs.map((element) => <Tab key={element.id} active={element.active} text={element.text} id={element.id} />)}
+      {data.map((element) => <Tab key={element.id} active={element.active} text={element.text} id={element.id} />)}
       <ListItem className="empty" />
     </List>
   </Box>
 };
 
-export default Tabs;
+export default memo(Tabs);
