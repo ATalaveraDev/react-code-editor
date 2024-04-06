@@ -133,8 +133,9 @@ const appReducer = (state: AppState, action: AppAction) => {
         tabs: newTabs
       };
     case ActionTypes.ModifyFileContent:
+      const activeTabdId = state.tabs.filter(tab => tab.active)[0].id;
       newTree = state.filesTree!.clone();
-      newTree.findById(action.payload.id)!.data.virContent = action.payload.content;
+      newTree.findById(activeTabdId)!.data.virContent = action.payload;
 
       return {
         ...state,

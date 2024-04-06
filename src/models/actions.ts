@@ -23,5 +23,5 @@ export class Action {
   static virtualizeOpenFile = (id: string, text: string, content: any): AppAction => ({ type: ActionTypes.VirtualizeAndOpenFile, payload: {id, text, content} });
   static closeFile = (nodeId: string): AppAction => ({ type: ActionTypes.CloseFile, payload: nodeId });
   static activateTab = (id: string): AppAction => ({ type: ActionTypes.ActivateTab, payload: id });
-  static modifyFileContent = (id: string, content: string): AppAction => ({ type: ActionTypes.ModifyFileContent, payload: {id, content} });
+  static modifyFileContent = (content: string): AppAction => ({ type: ActionTypes.ModifyFileContent, payload: content });
 }
